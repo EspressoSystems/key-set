@@ -3,7 +3,7 @@
 use ark_serialize::*;
 use commit::{Commitment, Committable};
 use core::fmt::Debug;
-use jf_aap::{
+use jf_cap::{
     proof::{freeze::FreezeProvingKey, mint::MintProvingKey, transfer::TransferProvingKey},
     TransactionVerifyingKey,
 };
