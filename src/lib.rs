@@ -22,7 +22,7 @@ use std::iter::FromIterator;
 use std::ops::Bound::*;
 
 #[derive(Debug, Snafu)]
-#[snafu(visibility = "pub")]
+#[snafu(visibility(pub))]
 pub enum Error {
     DuplicateKeys {
         num_inputs: usize,

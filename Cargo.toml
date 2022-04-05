@@ -12,4 +12,4 @@ itertools = "0.10.1"
 jf-cap = { features=["std"], git = "https://github.com/EspressoSystems/cap.git" }
 serde = { version = "1.0", features = ["derive"] }
 serde_with = "1.10.0"
-snafu = { version = "0.6.10", features = ["backtraces"] }
+snafu = { version = "0.7", features = ["backtraces"] }
