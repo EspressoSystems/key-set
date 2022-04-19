@@ -169,8 +169,20 @@ impl<K: SizedKey, Order: KeyOrder> KeySet<K, Order> {
                 Included(Order::sort_key(num_inputs, num_outputs)),
                 Unbounded,
             ))
-            .next()
-            .map(|(_, key)| (key.num_inputs(), key.num_outputs(), key))
+            // We are not guaranteed that everything in this range has `inputs >= num_inputs` _and_
+            // `outputs >= num_outputs`. For example, if `Order` is `OrderByInputs`, everything in
+            // the range has `inputs >= num_inputs`, but not necessarily `outputs >= num_outputs`,
+            // since, e.g. (3, 1) >= (2, 2) even though 1 < 2. Therefore, we need to iterate over
+            // the range to find the first key that satisfies both constraints.
+            .find_map(|(_, key)| {
+                let key_inputs = key.num_inputs();
+                let key_outputs = key.num_outputs();
+                if key_inputs >= num_inputs && key_outputs >= num_outputs {
+                    Some((key_inputs, key_outputs, key))
+                } else {
+                    None
+                }
+            })
             .ok_or_else(|| self.max_size())
     }
 
