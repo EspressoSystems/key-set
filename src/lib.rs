@@ -85,7 +85,7 @@ pub trait KeyOrder {
     fn sort_key(num_inputs: usize, num_outputs: usize) -> Self::SortKey;
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct OrderByInputs;
 impl KeyOrder for OrderByInputs {
     type SortKey = (usize, usize);
@@ -94,7 +94,7 @@ impl KeyOrder for OrderByInputs {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct OrderByOutputs;
 impl KeyOrder for OrderByOutputs {
     type SortKey = (usize, usize);
@@ -113,6 +113,7 @@ impl KeyOrder for OrderByOutputs {
     CanonicalSerialize,
     CanonicalDeserialize,
     PartialEq,
+    Eq,
 )]
 #[serde(bound = "K: Serialize + for<'a> Deserialize<'a>")]
 pub struct KeySet<K: SizedKey, Order: KeyOrder = OrderByInputs> {

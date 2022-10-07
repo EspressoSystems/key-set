@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Cancel Outdated Builds
-        uses: styfle/cancel-workflow-action@0.9.1
+        uses: styfle/cancel-workflow-action@0.10.1
         with:
           all_but_latest: true
           access_token: ${{ github.token }}
@@ -28,7 +28,7 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           profile: default
-          toolchain: "1.58"
+          toolchain: "1.63"
           override: true
           default: true
           components: rustfmt, clippy
