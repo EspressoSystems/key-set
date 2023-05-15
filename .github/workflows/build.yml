@@ -24,14 +24,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Install stable toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: default
-          toolchain: "1.63"
-          override: true
-          default: true
-          components: rustfmt, clippy
+
 
       - name: Enable Rust Caching
         uses: Swatinem/rust-cache@v2
@@ -40,15 +33,11 @@ jobs:
         run: cargo fmt -- --check
 
       - name: Clippy
-        uses: actions-rs/clippy-check@v1
-        with:
-          token: ${{ github.token }}
-          args: --workspace -- -D warnings
+        run: |
+          cargo clippy --workspace -- -D warnings
 
       - name: Audit
-        uses: actions-rs/audit-check@v1
-        with:
-          token: ${{ github.token }}
+        run: cargo audit
 
       - name: Test
         run: |
